@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
@@ -26,29 +26,53 @@
   #stat { position: fixed; left: 12px; top: 12px; font-size: 12px; color: var(--dim); background: var(--bg); padding: 5px 10px; border-radius: 6px; border: 1px solid var(--line); }
   #hint { position: fixed; right: 12px; top: 12px; font-size: 12px; color: var(--dim); background: var(--bg); padding: 5px 10px; border-radius: 6px; border: 1px solid var(--line); }
   #instr { position: fixed; left: 50%; bottom: 8px; transform: translateX(-50%); display: flex; gap: 8px; pointer-events: none; }
-  #instr canvas { width: min(264px, 31vw); height: auto; aspect-ratio: 1; border-radius: 8px; border: 2px solid #1c222b; box-shadow: 0 4px 18px rgba(0,0,0,.5); opacity: .96; }
-  #instr.m1 canvas:nth-child(n+2) { display: none; }
-  #instr.m2 { display: none; }
+  #instr canvas { width: min(196px, 24vw, 27vh); height: auto; aspect-ratio: 1; border-radius: 8px; border: 2px solid #1c222b; box-shadow: 0 4px 18px rgba(0,0,0,.5); opacity: .96; }
+  /* interface modes: hud0 = compact read-out, hud1 = full instruments, hud2 = hidden */
+  #mini { position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); display: none; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 6px 2px; pointer-events: none; backdrop-filter: blur(6px); }
+  #mini div { padding: 0 16px; border-right: 1px solid var(--line); text-align: center; }
+  #mini div:last-child { border-right: 0; }
+  #mini label { display: block; font-size: 10px; letter-spacing: .1em; color: var(--dim); }
+  #mini b { font: 600 20px Consolas, monospace; font-variant-numeric: tabular-nums; }
+  #mini small { font-size: 11px; color: var(--dim); margin-left: 3px; }
+  body.hud0 #mini { display: flex; }
+  body.hud0 #instr, body.hud0 #mcp, body.hud0 #stat { display: none; }
+  body.hud2 #instr, body.hud2 #mcp, body.hud2 #stat, body.hud2 #hint, body.hud2 #mini, body.hud2 #mis { display: none !important; }
+  body.hud0 #msg, body.hud2 #msg { top: 14px; }
+  #mis { position: fixed; right: 12px; top: 46px; display: none; min-width: 190px; max-width: 280px; background: var(--bg); border: 1px solid var(--line); border-left: 3px solid var(--acc); border-radius: 8px; padding: 7px 12px; font-size: 13px; pointer-events: none; backdrop-filter: blur(6px); }
+  #mis b { display: block; font-size: 12px; letter-spacing: .08em; color: var(--acc); }
+  #mis span { display: block; font-variant-numeric: tabular-nums; }
+  #misP { color: var(--dim); font-size: 12px; }
   .overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(5,8,12,.62); backdrop-filter: blur(5px); z-index: 10; padding: 16px; overflow: auto; }
   .card { width: min(880px, 100%); background: rgba(14,19,27,.94); border: 1px solid var(--line); border-radius: 14px; padding: 22px 26px; box-shadow: 0 20px 60px rgba(0,0,0,.6); max-height: 96vh; overflow: auto; }
-  h1 { margin: 0 0 2px; font-size: 24px; letter-spacing: .02em; } h1 small { font-size: 13px; color: var(--dim); font-weight: 400; margin-left: 8px; }
-  .sub { color: var(--dim); font-size: 13px; margin-bottom: 14px; }
-  .starts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
-  .starts button { padding: 12px 10px; text-align: left; border-radius: 10px; }
-  .starts button b { display: block; font-size: 16px; } .starts button span { font-size: 12px; color: var(--dim); }
+  h1 { margin: 0 0 2px; font-size: 24px; letter-spacing: .02em; } h1 small { display: block; font-size: 14px; color: #a9e9c0; font-weight: 400; margin-top: 3px; letter-spacing: .04em; }
+  h2 { margin: 12px 0 0; font-size: 12px; letter-spacing: .12em; color: var(--acc); font-weight: 600; }
+  .starts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: 8px 0 4px; }
+  .starts button { padding: 11px 12px; text-align: left; border-radius: 10px; }
+  .starts button b { display: block; font-size: 16px; } .starts button span { display: block; font-size: 12px; color: var(--dim); line-height: 1.45; }
+  .starts button i { display: block; font-style: normal; font-size: 12px; color: #a9e9c0; margin-top: 3px; }
   .starts button:hover { border-color: var(--acc); }
-  .opts { display: flex; gap: 16px; align-items: center; font-size: 13px; color: var(--dim); margin-bottom: 12px; flex-wrap: wrap; }
+  .starts.goal button { border-color: rgba(57,224,107,.35); background: rgba(57,224,107,.07); }
+  .starts.free button { padding: 8px 12px; } .starts.free button b { font-size: 14px; }
+  .opts { display: flex; gap: 16px; align-items: center; font-size: 13px; color: var(--dim); margin-bottom: 4px; flex-wrap: wrap; }
   select { background: #18202a; color: var(--tx); border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; font: inherit; }
   .keys { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 4px 22px; font-size: 13px; border-top: 1px solid var(--line); padding-top: 12px; }
   .keys div { display: flex; justify-content: space-between; gap: 10px; padding: 2px 0; }
   .keys h3 { grid-column: 1/-1; margin: 8px 0 2px; font-size: 12px; letter-spacing: .1em; color: var(--acc); font-weight: 600; }
   kbd { font: 600 11px Consolas, monospace; background: #232c38; border: 1px solid #3a4553; border-bottom-width: 2px; border-radius: 4px; padding: 1px 6px; color: #dfe6ee; white-space: nowrap; }
   .keys span:last-child { text-align: right; }
-  #resume { padding: 8px 18px; margin-bottom: 8px; border-color: var(--acc); }
+  #resume { padding: 8px 18px; margin: 8px 0; border-color: var(--acc); }
   #loading { display: flex; flex-direction: column; gap: 12px; }
   #bar { width: 320px; height: 6px; background: #1b222c; border-radius: 3px; overflow: hidden; } #loadbar { height: 100%; width: 0; background: var(--acc); transition: width .2s; }
-  #crash .card { width: min(520px, 100%); text-align: center; border-color: #a33; }
+  #crash .card, #result .card { width: min(520px, 100%); text-align: center; }
+  #crash .card { border-color: #a33; }
   #crash h1 { color: #ff6b5e; } #crashWhy { font-size: 17px; margin: 10px 0 16px; }
+  #result .card { border-color: rgba(57,224,107,.5); }
+  #resStars { font-size: 34px; letter-spacing: .12em; color: #ffd24a; margin: 6px 0 2px; }
+  #resGrade { color: var(--dim); font-size: 14px; margin-bottom: 12px; }
+  #resRows { display: grid; grid-template-columns: 1fr auto; gap: 7px 18px; text-align: left; font-size: 15px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 4px; margin-bottom: 14px; }
+  #resRows span:nth-child(odd) { color: var(--dim); } #resRows span:nth-child(even) { font: 600 16px Consolas, monospace; font-variant-numeric: tabular-nums; text-align: right; }
+  .btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btns button { padding: 9px 16px; border-radius: 8px; } .btns button.pri { border-color: var(--acc); background: rgba(57,224,107,.14); }
   .note { font-size: 12px; color: var(--dim); margin-top: 10px; line-height: 1.5; }
   /* ---- touch / mobile ---- */
   #touch { display: none; }
@@ -66,24 +90,28 @@
   #touch button { height: 44px; min-width: 52px; padding: 0 8px; font-size: 13px; background: rgba(10,14,20,.6); border: 1px solid rgba(255,255,255,.3); border-radius: 10px; touch-action: none; }
   #touch button.on { background: #1d5e31; border-color: var(--acc); }
   body.easy .adv { display: none !important; }
-  body.touch #instr { bottom: 6px; } body.touch #instr canvas { width: min(190px, 26vw, 46vh); }
+  body.touch #instr { bottom: 6px; } body.touch #instr canvas { width: min(170px, 24vw, 42vh); }
+  body.touch #instr canvas:nth-child(n+2) { display: none; }
+  body.touch #mini { bottom: auto; top: 6px; } body.touch #mini b { font-size: 17px; } body.touch #mini div { padding: 0 11px; }
+  body.touch #mis { top: 8px; right: max(10px, env(safe-area-inset-right)); max-width: 210px; font-size: 12px; }
   body.touch #mcp { transform: translateX(-50%) scale(.82); transform-origin: top center; top: 4px; }
-  body.touch #msg { top: 58px; font-size: 13px; }
+  body.touch #msg, body.touch.hud0 #msg, body.touch.hud2 #msg { top: 58px; font-size: 13px; }
+  body.touch.hud1 #mis { top: 58px; }
   #rotate { display: none; position: fixed; inset: 0; z-index: 30; background: #0a0e14; align-items: center; justify-content: center; font-size: 18px; text-align: center; padding: 24px; }
   @media (orientation: portrait) { body.touch #rotate { display: flex; } }
-  @media (max-height: 520px) { .card { padding: 12px 16px; } h1 { font-size: 18px; } .sub { display: none; } .starts button { padding: 8px; } .keys, .note { font-size: 12px; } }
+  @media (max-height: 520px) { .card { padding: 12px 16px; } h1 { font-size: 18px; } .starts button { padding: 7px 10px; } .keys, .note { font-size: 12px; } .quick { display: none !important; } }
   .easyrow { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--tx); }
   .easyrow input { width: 18px; height: 18px; accent-color: var(--acc); }
   details summary { cursor: pointer; color: var(--dim); font-size: 13px; padding: 6px 0; }
-  .quick { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 6px 18px; font-size: 14px; border-top: 1px solid var(--line); padding: 12px 0 6px; }
+  .quick { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 6px 18px; font-size: 14px; border-top: 1px solid var(--line); padding: 12px 0 6px; margin-top: 10px; }
   .quick div { display: flex; justify-content: space-between; gap: 8px; }
   body.touch .kbd-only { display: none; } body:not(.touch) .touch-only { display: none; }
 </style>
 </head>
-<body>
+<body class="hud0">
 <div id="ui">
   <div id="stat"></div>
-  <div id="hint"><kbd>Esc</kbd> 暫停 / 按鍵說明</div>
+  <div id="hint"><kbd>Esc</kbd> 暫停 · <kbd>H</kbd> 介面 · <kbd>C</kbd> 視角</div>
   <div id="mcp">
     <div class="cell"><label>SPD kt</label><div class="row"><button data-adj="spd" data-d="-1">−</button><b id="vSpd">250</b><button data-adj="spd" data-d="1">+</button></div></div>
     <button class="tog" id="bAT">A/THR</button>
@@ -94,9 +122,15 @@
     <button class="tog" id="bAPP">APP</button>
   </div>
   <div id="msg" style="opacity:0"></div>
-  <div id="instr" class="m0"></div>
+  <div id="mis"><b id="misT"></b><span id="misG"></span><span id="misP"></span></div>
+  <div id="instr"></div>
+  <div id="mini">
+    <div><label>速度</label><b id="mSpd">0</b><small>kt</small></div>
+    <div><label>高度</label><b id="mAlt">0</b><small>ft</small></div>
+    <div><label>航向</label><b id="mHdg">000</b><small>°</small></div>
+  </div>
   <div id="touch">
-    <div id="tbtnL"><button id="tMenu">☰</button><button id="tView">視角</button><button id="tHud">儀表</button></div>
+    <div id="tbtnL"><button id="tMenu">☰</button><button id="tView">視角</button><button id="tHud">介面</button></div>
     <div id="stick"><div id="knob"></div></div>
     <div id="tbtn">
       <button id="tFlapU" class="adv">襟翼 −</button><button id="tFlapD" class="adv">襟翼 +</button>
@@ -109,45 +143,52 @@
 <div id="rotate">請將手機橫放 ↻</div>
 
 <div class="overlay" id="loading" style="display:flex">
-  <div id="loadtxt">正在載入 SOLARIS R7 模型…</div>
+  <div id="loadtxt">正在載入 SOLARIS R7…</div>
   <div id="bar"><div id="loadbar"></div></div>
 </div>
 
 <div class="overlay" id="menu">
   <div class="card">
-    <h1 id="menuTitle">SOLARIS R7 飛行模擬器<small>以你的 Blender 模型製作</small></h1>
-    <div class="sub">六自由度飛行動力學 · 線傳飛控 · 四發動機 · ILS 進場 · 即時座艙儀表</div>
+    <h1><span id="menuTitle">SOLARIS R7 飛行模擬器</span><small>駕駛 SOLARIS，展開極光之旅</small></h1>
     <button id="resume" style="display:none">▶ 繼續飛行</button>
-    <div class="opts">
+    <h2>任務</h2>
+    <div class="starts goal">
+      <button data-start="gates"><b>航點穿越</b><span>沿海岸、城市到山谷，依序穿過 6 個光環</span><i>目標：全部穿過，越靠近環心越好</i></button>
+      <button data-start="stable"><b>穩定進場</b><span>距跑道 10 NM，手動沿 ILS 下降並落地</span><i>目標：航道與下滑道偏差越小越好</i></button>
+      <button data-start="landing"><b>平穩着陸</b><span>短五邊 4 NM，起落架已放下</span><i>目標：下降率低於 200 fpm，落在中心線</i></button>
+    </div>
+    <h2>自由飛行</h2>
+    <div class="starts free">
+      <button data-start="runway"><b>跑道起飛</b><span>SOL 36 號跑道頭</span></button>
+      <button data-start="approach"><b>自動進場</b><span>12 NM、3000 ft，可自動落地</span></button>
+      <button data-start="cruise"><b>高空巡航</b><span>FL350、M 0.83</span></button>
+      <button data-start="aurora"><b>極光夜航</b><span>夜間向北巡航，迎向極光</span></button>
+    </div>
+    <div class="opts" style="margin-top:10px">
       <label>時間 <select id="selTime"></select></label>
       <label>天氣 <select id="selWx"></select></label>
-      <label class="easyrow"><input type="checkbox" id="chkEasy" checked> 簡易模式（自動襟翼、起落架、煞車與自動落地）</label>
-    </div>
-    <div class="starts">
-      <button data-start="runway"><b>跑道起飛</b><span>SOL 36 號跑道頭，襟翼 15°</span></button>
-      <button data-start="approach"><b>五邊進場</b><span>距跑道 12 NM、3000 ft，自動駕駛中</span></button>
-      <button data-start="cruise"><b>高空巡航</b><span>FL350、M 0.83，自動駕駛中</span></button>
+      <label class="easyrow"><input type="checkbox" id="chkEasy" checked> 簡易模式（自動襟翼、起落架與煞車）</label>
     </div>
     <div class="quick kbd-only">
       <div><span>抬頭 / 低頭、左右轉</span><span><kbd>↓</kbd> <kbd>↑</kbd> <kbd>←</kbd> <kbd>→</kbd></span></div>
       <div><span>油門 加 / 減</span><span><kbd>W</kbd> / <kbd>S</kbd></span></div>
       <div><span>煞車（按住）</span><span><kbd>Space</kbd></span></div>
       <div><span>自動駕駛 / 自動進場</span><span><kbd>Z</kbd> / <kbd>L</kbd></span></div>
-      <div><span>切換視角</span><span><kbd>C</kbd></span></div>
+      <div><span>視角 / 介面顯示</span><span><kbd>C</kbd> / <kbd>H</kbd></span></div>
       <div><span>暫停</span><span><kbd>Esc</kbd></span></div>
     </div>
     <div class="quick touch-only">
       <div><span>左下搖桿</span><span>下拉抬頭、左右轉彎</span></div>
       <div><span>右側滑桿</span><span>油門</span></div>
       <div><span>拖曳畫面</span><span>環顧四周</span></div>
-      <div><span>上方面板</span><span>AP 自動駕駛、APP 自動進場</span></div>
+      <div><span>「介面」鍵</span><span>簡潔 / 完整儀表 / 隱藏</span></div>
     </div>
     <div class="note"><b>起飛：</b>油門推滿 → 聽到 “Rotate”（約 150 kt）後拉桿抬頭 → 保持約 12° 爬升。<br>
-    <b>落地：</b>選「五邊進場」，簡易模式會自動對準跑道並落地；想手動時推桿即可接手：沿 PAPI 兩紅兩白下降，50 ft 收油門、30 ft 輕拉平飄。</div>
+    <b>落地：</b>沿 PAPI 兩紅兩白下降，50 ft 收油門、30 ft 輕拉平飄。「自動進場」會替你對準跑道並落地，隨時推桿即可接手。</div>
     <details class="kbd-only"><summary>全部按鍵（進階）</summary>
     <div class="keys">
       <h3>飛行操縱</h3>
-      <div><span>俯仰（↓/S 拉桿抬頭）</span><span><kbd>↑</kbd> <kbd>↓</kbd></span></div>
+      <div><span>俯仰（↓ 拉桿抬頭）</span><span><kbd>↑</kbd> <kbd>↓</kbd></span></div>
       <div><span>滾轉</span><span><kbd>←</kbd> <kbd>→</kbd></span></div>
       <div><span>方向舵 / 地面轉向</span><span><kbd>Q</kbd> <kbd>E</kbd> 或 <kbd>A</kbd> <kbd>D</kbd></span></div>
       <div><span>油門 加 / 減</span><span><kbd>W</kbd> <kbd>S</kbd> 或 <kbd>PgUp</kbd> <kbd>PgDn</kbd></span></div>
@@ -165,13 +206,26 @@
       <h3>視角與環境</h3>
       <div><span>座艙 / 外部 / 塔台</span><span><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> 或 <kbd>C</kbd></span></div>
       <div><span>環顧 / 縮放</span><span>滑鼠拖曳 / 滾輪</span></div>
-      <div><span>儀表顯示切換</span><span><kbd>H</kbd></span></div>
+      <div><span>介面：簡潔 / 完整儀表 / 隱藏</span><span><kbd>H</kbd></span></div>
       <div><span>導航顯示範圍</span><span><kbd>[</kbd> <kbd>]</kbd></span></div>
       <div><span>時間 / 天氣</span><span><kbd>N</kbd> / <kbd>U</kbd></span></div>
       <div><span>靜音 / 暫停</span><span><kbd>M</kbd> / <kbd>Esc</kbd></span></div>
     </div>
-
     </details>
+  </div>
+</div>
+
+<div class="overlay" id="result">
+  <div class="card">
+    <h1 id="resTitle">任務完成</h1>
+    <div id="resStars">★★★</div>
+    <div id="resGrade"></div>
+    <div id="resRows"></div>
+    <div class="btns">
+      <button class="pri" id="resRetry">再飛一次</button>
+      <button id="resGo">繼續飛行</button>
+      <button id="resMenu">回主選單</button>
+    </div>
   </div>
 </div>
 
@@ -179,14 +233,13 @@
   <div class="card">
     <h1>飛機失事</h1>
     <div id="crashWhy"></div>
-    <div class="starts">
-      <button data-start="runway"><b>跑道起飛</b><span>重新開始</span></button>
-      <button data-start="approach"><b>五邊進場</b><span>再試一次落地</span></button>
-      <button data-start="cruise"><b>高空巡航</b><span>FL350</span></button>
+    <div class="btns">
+      <button class="pri" id="crashRetry">再試一次</button>
+      <button id="crashMenu">回主選單</button>
     </div>
   </div>
 </div>
 <script>window.__GLB_DIR = ''; window.__GLB_PARTS = { exterior: 2 };</script>
-<script src="app.js?v=2"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
