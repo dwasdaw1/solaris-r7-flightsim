@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>SOLARIS R7 飛行模擬器</title>
+<title>SOLARIS 飛行模擬器</title>
 <style>
   :root { --bg: rgba(10,14,20,.78); --line: rgba(255,255,255,.14); --tx: #e8edf2; --dim: #93a0ad; --acc: #39e06b; --mag: #ff5cf4; }
   * { box-sizing: border-box; }
@@ -143,17 +143,17 @@
 <div id="rotate">請將手機橫放 ↻</div>
 
 <div class="overlay" id="loading" style="display:flex">
-  <div id="loadtxt">正在載入 SOLARIS R7…</div>
+  <div id="loadtxt">正在載入 SOLARIS…</div>
   <div id="bar"><div id="loadbar"></div></div>
 </div>
 
 <div class="overlay" id="menu">
   <div class="card">
-    <h1><span id="menuTitle">SOLARIS R7 飛行模擬器</span><small>駕駛 SOLARIS，展開極光之旅</small></h1>
+    <h1><span id="menuTitle">SOLARIS 飛行模擬器</span><small>駕駛 SOLARIS，展開極光之旅</small></h1>
     <button id="resume" style="display:none">▶ 繼續飛行</button>
     <h2>任務</h2>
     <div class="starts goal">
-      <button data-start="gates"><b>航點穿越</b><span>沿海岸、城市到山谷，依序穿過 6 個光環</span><i>目標：全部穿過，越靠近環心越好</i></button>
+      <button data-start="gates"><b>航點穿越</b><span>沿海岸繞機場一圈，最後飛越城市，依序穿過 7 個光環</span><i>目標：全部穿過，越靠近環心越好</i></button>
       <button data-start="stable"><b>穩定進場</b><span>距跑道 10 NM，手動沿 ILS 下降並落地</span><i>目標：航道與下滑道偏差越小越好</i></button>
       <button data-start="landing"><b>平穩着陸</b><span>短五邊 4 NM，起落架已放下</span><i>目標：下降率低於 200 fpm，落在中心線</i></button>
     </div>
@@ -240,6 +240,6 @@
   </div>
 </div>
 <script>window.__GLB_DIR = ''; window.__GLB_PARTS = { exterior: 2 };</script>
-<script src="app.js?v=3"></script>
+<script src="app.js?v=4"></script>
 </body>
 </html>
