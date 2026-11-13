@@ -88,7 +88,8 @@
   #tbtn { position: fixed; right: max(88px, calc(env(safe-area-inset-right) + 88px)); bottom: 18px; display: grid; grid-template-columns: repeat(2, 64px); gap: 8px; }
   #tbtnL { position: fixed; left: max(12px, env(safe-area-inset-left)); top: 8px; display: flex; flex-direction: column; gap: 6px; }
   #touch button { height: 44px; min-width: 52px; padding: 0 8px; font-size: 13px; background: rgba(10,14,20,.6); border: 1px solid rgba(255,255,255,.3); border-radius: 10px; touch-action: none; }
-  #touch button.on { background: #1d5e31; border-color: var(--acc); }
+  #touch button.on, #touch button.hit, .tog.hit { background: #1d5e31; border-color: var(--acc); }
+  body.touch button:hover { background: rgba(10,14,20,.6); } body.touch .tog.on:hover { background: #1d5e31; }
   body.easy .adv { display: none !important; }
   body.touch #instr { bottom: 6px; } body.touch #instr canvas { width: min(170px, 24vw, 42vh); }
   body.touch #instr canvas:nth-child(n+2) { display: none; }
@@ -240,6 +241,6 @@
   </div>
 </div>
 <script>window.__GLB_DIR = ''; window.__GLB_PARTS = { exterior: 2 };</script>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
